@@ -182,8 +182,6 @@ func (i *IconDetect) Fix() error {
 			log.Printf("error deleting key: %s, skip", n)
 			continue
 		}
-
-		delete(i.names, n)
 	}
 
 	key, err := registry.OpenKey(registry.LOCAL_MACHINE,
@@ -217,6 +215,10 @@ func (i *IconDetect) Fix() error {
 		}
 
 		new.SetStringValue("", v)
+
+		new.Close()
+
+		log.Printf("rename %s to %s", o, n)
 	}
 
 	for o := range i.rename {
