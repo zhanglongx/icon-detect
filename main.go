@@ -9,10 +9,12 @@ import (
 	"time"
 
 	"golang.org/x/sys/windows/registry"
+	"gopkg.in/toast.v1"
 )
 
 const (
 	APPNAME = "icon-detect"
+	TITLE   = "icon changes detected"
 	VERSION = "1.0.0"
 )
 
@@ -71,6 +73,11 @@ func main() {
 		}
 
 		err = i.Fix()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		err = pushNotify()
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -228,6 +235,20 @@ func (i *IconDetect) Fix() error {
 			log.Printf("error deleting key: %s, skip", o)
 			continue
 		}
+	}
+
+	return nil
+}
+
+func pushNotify() error {
+	n := toast.Notification{
+		AppID: APPNAME,
+		Title: TITLE,
+	}
+
+	err := n.Push()
+	if err != nil {
+		return err
 	}
 
 	return nil
