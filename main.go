@@ -87,7 +87,7 @@ func newIconDetect() *IconDetect {
 	}
 }
 
-// detect should be ran as a new IconDetect instance, and only once
+// Detect should be ran as a new IconDetect instance, and only once
 func (i *IconDetect) Detect() (bool, error) {
 	isChanged := false
 
@@ -173,6 +173,7 @@ func (i *IconDetect) WriteBackup(fileName string) error {
 	return nil
 }
 
+// Fix should be ran as a new IconDetect instance, and only once
 func (i *IconDetect) Fix() error {
 	for _, n := range i.deletes {
 		err := registry.DeleteKey(registry.LOCAL_MACHINE,
