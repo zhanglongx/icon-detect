@@ -31,3 +31,11 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
     - icon-detect will output log file (with rotation) under the execute directory.
 
     - `-b` to backup the registry before auto-adjustment.
+
+## UAC
+
+Windows has a UAC (User Account Control) mechanism. You can build icon-detect try to detect if UAC is enabled, and if it is, it will prompt a UAC dialog to ask for administrator permission.
+
+```powershell
+    PS > /path/to/mt.exe -manifest app.manifest -outputresource:icon-detect.exe;1
+```
