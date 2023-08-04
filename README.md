@@ -26,7 +26,7 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 
 2. Run it
 
-    - ⚠️icon-detect need to be run as administrator, as it need to access the registry.
+    - ⚠️icon-detect need to be run as administrator, as it need to access the registry. See [UAC](#UAC) for more information.
 
     - icon-detect will output log file (with rotation) under the execute directory.
 
