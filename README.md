@@ -22,6 +22,8 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
         PS > go build -ldflags -H=windowsgui .
     ```
 
+    ⚠️`-H=windowsgui` will also silence the stdout and stderr. e.g, `-h` and `-v` will not have any output.
+
 2. Run it
 
     - ⚠️icon-detect need to be run as administrator, as it need to access the registry.
