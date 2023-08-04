@@ -37,5 +37,5 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 Windows has a UAC (User Account Control) mechanism. You can build icon-detect try to detect if UAC is enabled, and if it is, it will prompt a UAC dialog to ask for administrator permission.
 
 ```powershell
-    PS > /path/to/mt.exe -manifest app.manifest -outputresource:icon-detect.exe;1
+    PS > \path\to\mt.exe -manifest app.manifest -outputresource:icon-detect.exe;1
 ```
