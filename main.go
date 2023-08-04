@@ -2,12 +2,13 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
 	"os"
 	"sort"
 	"strings"
 	"time"
 
+	"github.com/zhanglongx/icon-detect/logfile"
 	"golang.org/x/sys/windows/registry"
 	"gopkg.in/toast.v1"
 )
@@ -50,15 +51,23 @@ func main() {
 	flag.Parse()
 
 	if *optVersion {
-		log.Printf("%s %s", APPNAME, VERSION)
+		fmt.Printf("%s %s", APPNAME, VERSION)
 		os.Exit(0)
 	}
+
+	err := logfile.InitLog(APPNAME + ".log")
+	if err != nil {
+		fmt.Printf("error initializing log file: %s\n", err)
+		os.Exit(1)
+	}
+
+	defer logfile.DeInitLog()
 
 	i := newIconDetect()
 
 	isChanged, err := i.Detect()
 	if err != nil {
-		log.Fatal(err)
+		logfile.Fatal(err)
 	}
 
 	if isChanged {
@@ -68,18 +77,18 @@ func main() {
 
 			err = i.WriteBackup(fileName)
 			if err != nil {
-				log.Fatal(err)
+				logfile.Fatal(err)
 			}
 		}
 
 		err = i.Fix()
 		if err != nil {
-			log.Fatal(err)
+			logfile.Fatal(err)
 		}
 
 		err = pushNotify()
 		if err != nil {
-			log.Fatal(err)
+			logfile.Fatal(err)
 		}
 	}
 
@@ -115,14 +124,14 @@ func (i *IconDetect) Detect() (bool, error) {
 	for _, n := range names {
 		sub, err := registry.OpenKey(key, n, registry.READ)
 		if err != nil {
-			log.Printf("error opening key: %s, skip", n)
+			logfile.Printf("error opening key: %s, skip", n)
 			continue
 		}
 
 		v, _, err := sub.GetStringValue("")
 
 		if err != nil {
-			log.Printf("error reading value: %s, skip", n)
+			logfile.Printf("error reading value: %s, skip", n)
 			continue
 		}
 
@@ -187,7 +196,7 @@ func (i *IconDetect) Fix() error {
 			KEY+"\\"+n)
 
 		if err != nil {
-			log.Printf("error deleting key: %s, skip", n)
+			logfile.Printf("error deleting key: %s, skip", n)
 			continue
 		}
 	}
@@ -204,13 +213,13 @@ func (i *IconDetect) Fix() error {
 	for o, n := range i.rename {
 		sub, err := registry.OpenKey(key, o, registry.ALL_ACCESS)
 		if err != nil {
-			log.Printf("error opening key: %s, skip", o)
+			logfile.Printf("error opening key: %s, skip", o)
 			continue
 		}
 
 		v, _, err := sub.GetStringValue("")
 		if err != nil {
-			log.Printf("error reading value: %s, skip", o)
+			logfile.Printf("error reading value: %s, skip", o)
 			continue
 		}
 
@@ -218,7 +227,7 @@ func (i *IconDetect) Fix() error {
 
 		new, _, err := registry.CreateKey(key, n, registry.ALL_ACCESS)
 		if err != nil {
-			log.Printf("error creating key: %s, skip", n)
+			logfile.Printf("error creating key: %s, skip", n)
 			continue
 		}
 
@@ -226,13 +235,13 @@ func (i *IconDetect) Fix() error {
 
 		new.Close()
 
-		log.Printf("rename %s to %s", o, n)
+		logfile.Printf("rename %s to %s", o, n)
 	}
 
 	for o := range i.rename {
 		err = registry.DeleteKey(registry.LOCAL_MACHINE, KEY+"\\"+o)
 		if err != nil {
-			log.Printf("error deleting key: %s, skip", o)
+			logfile.Printf("error deleting key: %s, skip", o)
 			continue
 		}
 	}
