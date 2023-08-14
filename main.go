@@ -235,7 +235,7 @@ func (i *IconDetect) Fix() error {
 
 		new.Close()
 
-		logfile.Printf("rename %s to %s", o, n)
+		logfile.Printf("rename \"%s\" to \"%s\"", o, n)
 	}
 
 	for o := range i.rename {
