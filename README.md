@@ -10,7 +10,9 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 
 ## Usage
 
-1. Build the binary.
+1. (FIXME) Change `BOOST` list in `main.go` to the software you want to adjust.
+
+2. Build the binary.
 
     ```powershell
         PS > go build .
@@ -24,7 +26,7 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 
     ⚠️`-H=windowsgui` will also silence the stdout and stderr. e.g, `-h` and `-v` will not have any output.
 
-2. Run it
+3. Run it
 
     - ⚠️icon-detect need to be run as administrator, as it need to access the registry. See [UAC](#UAC) for more information.
 
