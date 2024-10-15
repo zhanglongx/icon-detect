@@ -65,3 +65,5 @@ Windows has a UAC(User Account Control) mechanism. You can build icon-detect try
 ```powershell
     PS > \path\to\mt.exe -manifest app.manifest -outputresource:icon-detect.exe;1
 ```
+
+️`mt.exe` is included in [Windows SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/).
