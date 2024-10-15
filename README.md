@@ -46,7 +46,7 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 
     2. once registered, icon-detect can pop notification to close application(hard-coded `Total Command` for now).
 
-    3. Unregister the protocol handler.
+    3. Unregister the protocol handler, if needed.
 
         ```powershell
             PS > .\icon-detect.exe -u
