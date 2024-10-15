@@ -1,6 +1,7 @@
 package detect
 
 import (
+	"errors"
 	"fmt"
 	"syscall"
 	"unsafe"
@@ -13,6 +14,10 @@ var (
 	procSendMessage              = user32.NewProc("SendMessageW")
 	procEnumWindows              = user32.NewProc("EnumWindows")
 	procGetWindowThreadProcessId = user32.NewProc("GetWindowThreadProcessId")
+)
+
+var (
+	errProcessNotFound = errors.New("not found")
 )
 
 const (
@@ -43,6 +48,9 @@ func GetProcessPathByName(processName string) (string, error) {
 func CloseProcessWindow(processName string) error {
 	hwnd, err := findWindow(processName)
 	if err != nil {
+		if err == errProcessNotFound {
+			return nil
+		}
 		return err
 	}
 
@@ -83,7 +91,7 @@ func getPIDByName(processName string) (uint32, error) {
 		}
 	}
 
-	return 0, fmt.Errorf("not found: %s", processName)
+	return 0, errProcessNotFound
 }
 
 func openProcess(pid uint32) (windows.Handle, error) {
