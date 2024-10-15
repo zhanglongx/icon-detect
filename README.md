@@ -50,7 +50,7 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 
     2. once registered, icon-detect can pop notification to restart application.
 
-    3. Unregister the protocol handler, if needed.
+    3. unregister the protocol handler, if needed.
 
         ```powershell
             PS > .\icon-detect.exe -u
