@@ -10,7 +10,7 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 
 ## Usage
 
-1. (FIXME) Change `BOOST` list in `main.go` to the software you want to adjust.
+1. (FIXME) Change `BOOST` list in `pkg/detect/detect.go` to the software you want to adjust.
 
 2. Build the binary.
 
@@ -34,9 +34,29 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 
     - `-b` to backup the registry before auto-adjustment.
 
+4. (Optional) Closing Application via [Windows URI Scheme](https://learn.microsoft.com/en-us/windows/uwp/app-resources/uri-schemes).
+
+    1. icon-detect needs to be registered as a protocol handler.
+
+        ```powershell
+            PS > .\icon-detect.exe -r
+        ```
+
+        ⚠️run as administrator.
+
+    2. once registered, icon-detect can pop notification to close application(hard-coded `Total Command` for now).
+
+    3. Unregister the protocol handler.
+
+        ```powershell
+            PS > .\icon-detect.exe -u
+        ```
+
+        ⚠️run as administrator.
+
 ## UAC
 
-Windows has a UAC (User Account Control) mechanism. You can build icon-detect try to detect if UAC is enabled, and if it is, it will prompt a UAC dialog to ask for administrator permission.
+Windows has a UAC(User Account Control) mechanism. You can build icon-detect try to detect if UAC is enabled, and if it is, it will prompt a UAC dialog to ask for administrator permission.
 
 ```powershell
     PS > \path\to\mt.exe -manifest app.manifest -outputresource:icon-detect.exe;1
