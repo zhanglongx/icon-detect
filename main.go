@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 
@@ -83,9 +84,15 @@ func main() {
 			logfile.Fatal("invalid arguments")
 		}
 
-		// TODO: more programs?
-		if args[0] != PROGRAMTOKILL {
-			logfile.Fatal("should be " + PROGRAMTOKILL)
+		uriParts := strings.Split(args[0], "://")
+		if len(uriParts) < 2 {
+			logfile.Fatal("invalid URI")
+		}
+		exe := strings.Split(uriParts[1], "/")[0]
+
+		if exe != PROGRAMTOKILL {
+			logfile.Fatal("should be " + PROGRAMTOKILL +
+				" in " + args[0])
 		}
 
 		err := reStartProcess(PROGRAMTOKILL)
