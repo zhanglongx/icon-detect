@@ -14,7 +14,7 @@ Find more in [List of shell icon overlay identifiers](https://en.wikipedia.org/w
 
     - Change `BOOST` list in `pkg/detect/detect.go` to the software you want to adjust. 
 
-    - Change `PROGRAMTOKILL` in main.go to the application you want to restart, after the icon-overlay adjustment.
+    - Change `PROGRAMTOKILL` in `main.go` to the application you want to restart, after the icon-overlay adjustment.
 
 2. Build the binary.
 
